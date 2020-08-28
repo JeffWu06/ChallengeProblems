@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class MovieTitles {
     
-    final static String baseUrl = "https://jsonmock.hackerrank.com/api/movies/search/?Title=";
+    final static String BASE_URL = "https://jsonmock.hackerrank.com/api/movies/search/?Title=";
     
     public static void main(String[] args) {
         String[] movies = getMovieTitles("spiderman");
@@ -36,25 +36,25 @@ public class MovieTitles {
     
     /* Get all movie titles matching value substr as an alphabetized Array. */
     public static String[] getMovieTitles(String substr) {
-        String urlString = baseUrl + substr;
+        String urlString = BASE_URL + substr;
         JSONObject jsonResponse = getJsonResponse(urlString);
         int pagesCount = jsonResponse.getInt("total_pages");
         int totalTitles = jsonResponse.getInt("total");
         
-        String[] titlesOrdered = new String[totalTitles];
-        int index = 0;
+        String[] titles = new String[totalTitles];
         
+        int index = 0;
         for (int i = 1; i <= pagesCount; i++) {
-            jsonResponse = getJsonResponse(baseUrl + substr + "&page=" + i);
+            jsonResponse = getJsonResponse(BASE_URL + substr + "&page=" + i);
             JSONArray data = jsonResponse.getJSONArray("data");
             for (int j = 0; j < data.length(); j++) {
                 String title = data.getJSONObject(j).getString("Title");
-                titlesOrdered[index] = title;
+                titles[index] = title;
                 index++;
             }
         }
         
-        return alphabetizeArray(titlesOrdered);
+        return alphabetizeArray(titles);
     }
     
     /* Establish connection at URL parameter and return the responded JSON. */
