@@ -21,6 +21,8 @@ import org.json.JSONObject;
  */
 public class MovieTitles {
     
+    final static String baseUrl = "https://jsonmock.hackerrank.com/api/movies/search/?Title=";
+    
     public static void main(String[] args) {
         String[] movies = getMovieTitles("spiderman");
         displayArray(movies);
@@ -34,7 +36,7 @@ public class MovieTitles {
     
     /* Get all movie titles matching value substr as an alphabetized Array. */
     public static String[] getMovieTitles(String substr) {
-        String urlString = "https://jsonmock.hackerrank.com/api/movies/search/?Title=" + substr;
+        String urlString = baseUrl + substr;
         JSONObject jsonResponse = getJsonResponse(urlString);
         int pagesCount = jsonResponse.getInt("total_pages");
         int totalTitles = jsonResponse.getInt("total");
@@ -43,7 +45,7 @@ public class MovieTitles {
         int index = 0;
         
         for (int i = 1; i <= pagesCount; i++) {
-            jsonResponse = getJsonResponse("https://jsonmock.hackerrank.com/api/movies/search/?Title=" + substr + "&page=" + i);
+            jsonResponse = getJsonResponse(baseUrl + substr + "&page=" + i);
             JSONArray data = jsonResponse.getJSONArray("data");
             for (int j = 0; j < data.length(); j++) {
                 String title = data.getJSONObject(j).getString("Title");
