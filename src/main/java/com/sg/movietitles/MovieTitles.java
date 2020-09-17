@@ -88,16 +88,11 @@ public class MovieTitles {
     
     /* Take a String array and return it alphabetized. */
     public static String[] alphabetizeArray(String[] arr) {
-        boolean swapOccurred = false;
         for (int i = 0; i < arr.length - 1; i++) {
             if (arr[i].compareToIgnoreCase(arr[i + 1]) > 0) {
                 String placeholder = arr[i];
                 arr[i] = arr[i + 1];
                 arr[i + 1] = placeholder;
-                swapOccurred = true;
-            }
-            if (!swapOccurred) {
-                break;
             }
         }
         return arr;
